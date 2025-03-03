@@ -31,4 +31,5 @@ public class KeycloakUserApi {
     public void deleteUser(@PathVariable String userId) {
         keycloakUserService.deleteUserById(userId);
     }
+
 }

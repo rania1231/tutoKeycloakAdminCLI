@@ -67,6 +67,7 @@ public class SecurityConfig {
             web.ignoring().requestMatchers(
                     HttpMethod.DELETE,
                     "/public/**"
+
             );
             web.ignoring().requestMatchers(
                     HttpMethod.PUT,
