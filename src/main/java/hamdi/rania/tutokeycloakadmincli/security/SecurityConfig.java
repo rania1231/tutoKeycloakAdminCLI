@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .build();
     }
 
-    /*@Bean
+    @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
 
         return (web) -> {
@@ -79,7 +79,7 @@ public class SecurityConfig {
 
 
         };
-    }*/
+    }
 
 
 
