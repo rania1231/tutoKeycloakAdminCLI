@@ -1,5 +1,6 @@
 package hamdi.rania.tutokeycloakadmincli.web;
 
+import hamdi.rania.tutokeycloakadmincli.dto.UserProfileRegistrationRecord;
 import lombok.AllArgsConstructor;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,7 @@ import java.security.Principal;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/users")
+@RequestMapping("/kusers")
 @AllArgsConstructor
 public class KeycloakUserApi {
 
@@ -18,18 +19,18 @@ public class KeycloakUserApi {
 
 
     @PostMapping
-    public UserRegistrationRecord createUser(@RequestBody UserRegistrationRecord user) {
+    public UserRepresentation createUser(@RequestBody UserProfileRegistrationRecord user) {
         return keycloakUserService.createUser(user);
     }
-
+    //We use principal here to be sure that he can only get his data
     @GetMapping
     public UserRepresentation getUser(Principal principal) {
         return keycloakUserService.getUserById(principal.getName());
     }
-
-    @DeleteMapping("/{userId}")
-    public void deleteUser(@PathVariable String userId) {
-        keycloakUserService.deleteUserById(userId);
+    //We use principal here to be sure that he can only delete his profile
+    @DeleteMapping()
+    public void deleteUser(Principal principal) {
+        keycloakUserService.deleteUserById(principal.getName());
     }
 
 }

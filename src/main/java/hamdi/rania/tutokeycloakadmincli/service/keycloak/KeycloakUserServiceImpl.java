@@ -1,5 +1,7 @@
 package hamdi.rania.tutokeycloakadmincli.service.keycloak;
 
+import hamdi.rania.tutokeycloakadmincli.dto.UserProfileRegistrationRecord;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.admin.client.Keycloak;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 public class KeycloakUserServiceImpl implements KeycloakUserService {
     private final Keycloak keycloak;
 
@@ -23,7 +26,7 @@ public class KeycloakUserServiceImpl implements KeycloakUserService {
     }
 
     @Override
-    public UserRegistrationRecord createUser(UserRegistrationRecord userRegistrationRecord) {
+    public UserRepresentation createUser(UserProfileRegistrationRecord userRegistrationRecord) {
         //assigning the values of our user to userRepresentation
          UserRepresentation userRepresentation = new UserRepresentation();
          userRepresentation.setEnabled(true);
@@ -50,7 +53,7 @@ public class KeycloakUserServiceImpl implements KeycloakUserService {
         Response response=usersResource.create(userRepresentation);
 
        if(response.getStatus() == Response.Status.CREATED.getStatusCode()){
-           return userRegistrationRecord;
+           return userRepresentation;
        }
 //       response.readEntity()
 
@@ -72,6 +75,11 @@ public class KeycloakUserServiceImpl implements KeycloakUserService {
     @Override
     public void deleteUserById(String userId) {
         getUsersResource().delete(userId);
+    }
+
+    @Override
+    public List<UserRepresentation> getUsers() {
+        return getUsersResource().list();
     }
 
 }
